@@ -1,0 +1,186 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>AutoScope</title>
+
+    <!--Tab Icon-->
+    <link rel="shortcut icon" href="img/favicon.png">
+
+    <!--Bootstrap-->
+	<link href="css/bootstrap.min.css" rel="stylesheet" />
+
+    <!--trNgGrid CSS-->
+    <link href="css/trNgGrid.min.css" rel="stylesheet" />
+
+    <!--Custom CSS-->
+    <link href="css/style.css" rel="stylesheet" />
+
+    <!--Fonts-->
+    <link href='https://fonts.googleapis.com/css?family=Poppins:500' rel='stylesheet' type='text/css'>
+
+    <!--Angular JS-->
+    <script src="scripts/angular.min.js"></script>
+    <script src="scripts/angular-ui/ui-bootstrap.min.js"></script>
+    <script src="scripts/angular-ui/ui-bootstrap-tpls.min.js"></script>
+
+    <!--trNgGrid JS-->
+    <script src="scripts/trNgGrid.min.js"></script>
+
+<!--Custom Angular JS-->
+    <script src="scripts/CarAppController.js"></script>
+
+
+</head>
+<body ng-app="carApp">
+    <div class="topJumbo container text-center">
+        <h1>Auto<span id="topTitle">Scope</span></h1>
+        <br />
+        <br />
+        <h3>Thousands of makes. Thousands of models.</h3>
+        <h3>Find <em>your</em> perfect ride.</h3>
+    </div>
+    <div ng-controller="carAppController as carCtrl" class="carStuff container">
+        <div class="row">
+            <div class="col-md-3 col-sm-3 text-center">
+                <h4>Select Year</h4>
+                <div class="text-center">
+                    <div class="select">
+                        <span class="arr"></span>
+                        <select ng-model="carCtrl.options.year"
+                                ng-options="year for year in carCtrl.years"
+                                ng-change="carCtrl.getMakes()"></select>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3 col-sm-3 text-center">
+                <h4>Select Make</h4>
+                <div class="text-center">
+                    <div class="select">
+                        <span class="arr"></span>
+                        <select class="center-block" ng-model="carCtrl.options.make"
+                                ng-options="make for make in carCtrl.makes"
+                                ng-change="carCtrl.getModels()"></select>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3 col-sm-3 text-center">
+                <h4>Select Model</h4>
+                <div class="text-center">
+                    <div class="select">
+                        <span class="arr"></span>
+                        <select class="center-block" ng-model="carCtrl.options.model"
+                                ng-options="model for model in carCtrl.models"
+                                ng-change="carCtrl.getTrims()"></select>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3 col-sm-3 text-center">
+                <h4>Select Trim</h4>
+                <div class="text-center">
+                    <div class="select">
+                        <span class="arr"></span>
+                        <select class="center-block" ng-model="carCtrl.options.trim"
+                                ng-options="trim for trim in carCtrl.trims"
+                                ng-change="carCtrl.getCars()"></select>
+                    </div>
+                </div>
+            </div>
+    </div>
+    <br />
+    <br />
+    <br />
+    <!------------------TrNg Grid-------------->
+    <div class="row">
+        <div class="col-md-12">
+            <table tr-ng-grid="" items="carCtrl.cars" fields="['make', 'model_name', 'model_trim', 'body_style']" page-items="10">
+                <thead>
+                    <tr>
+                        <th field-name="make" display-name="Make"></th>
+                        <th field-name="model_name" display-name="Model"></th>
+                        <th field-name="model_trim" display-name="Trim"></th>
+                        <th field-name="body_style" display-name="Style"></th>
+                        <th display-name="Get Info" enable-filtering="false" enable-sorting="false"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><button class="niceButton" ng-click="carCtrl.open(gridItem.id)">More Info</button></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+
+    <!------------------ng Modal--------------------->
+    <script type="text/ng-template" id="carInfo.html">
+        <div class="modal-header">
+            <div>
+                <p>{{cm.car.car.model_year}} {{cm.car.car.make | capitalize}} {{cm.car.car.model_name}}</p>
+                <button class="niceButton pull-right" ng-click="cm.cancel()">X</button>
+            </div>
+        </div>
+        <br />
+
+        <div class="modal-body">
+            <div class="row">
+                <div class="col-md-2"></div>
+                <div class='col-md-8'>
+                    <img class="img-responsive" ng-src="{{cm.car.image}}" />
+                </div>
+                <div class="col-md-2"></div>
+            </div>
+            <hr />
+            <div class="row">
+                <div class="col-md-6">
+                    <p>Model Trim: {{cm.car.car.model_trim}}</p>
+                    <p>Body Style: {{cm.car.car.body_style}}</p>
+                    <p>Cylinders: {{cm.car.car.engine_num_cyl}}</p>
+                    <p>Drive Type: {{cm.car.car.drive_type}}</p>
+                    <p>Transmission Type: {{cm.car.car.transmission_type}}</p>
+                </div>
+                <div class="col-md-6">
+                    <p>Seats: {{cm.car.car.seats}}</p>
+                    <p>Doors: {{cm.car.car.doors}}</p>
+                    <p>Highway MPG: {{cm.car.car.lkm_hwy}}</p>
+                    <p>City MPG: {{cm.car.car.lkm_city}}</p>
+                    <p></p>
+                </div>
+            </div>
+            <br />
+            <br />
+            <div class="row">
+                <div class="col-md-6 col-md-offset-3 text-center">
+                    <p>Wondering about recalls? Click here to <a href="" ng-click="showme=true">show</a>.</p>
+                    <p>Click here to <a href="" ng-click="showme=false">hide</a>.</p>
+                </div>
+            </div>
+            <br />
+            <div class="row" ng-show="showme" ng-repeat="recall in cm.car.recalls.Results">
+                <div class="col-md-10 col-md-offset-1">
+                    <p class="text-center recall-line">------------</p>
+                    <p>{{recall.ReportReceivedDate | date:"MM/dd/yyyy"}}</p>
+                    <br />
+                    <p>{{recall.Component}}</p>
+                    <br />
+                    <p>{{recall.Summary}}</p>
+                    <br />
+                    <p>{{recall.Conequence}}</p>
+                    <br />
+                    <p>{{recall.Remedy}}</p>
+                    <br />
+                    <p>{{recall.Notes}}</p>
+                    <br />
+                </div>
+            </div>
+        </div>
+
+        <div class="modal-footer">
+            <button class="niceButton" ng-click="cm.ok()">Close</button>
+        </div>
+    </script>
+
+    </div>
+
+</body>
+</html>
