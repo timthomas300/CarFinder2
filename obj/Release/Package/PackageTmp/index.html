@@ -116,7 +116,7 @@
     <script type="text/ng-template" id="carInfo.html">
         <div class="modal-header">
             <div>
-                <p>{{cm.car.car.model_year}} {{cm.car.car.make | capitalize}} {{cm.car.car.model_name}}</p>
+                <p class="pull-left">{{cm.car.car.model_year}} {{cm.car.car.make | capitalize}} {{cm.car.car.model_name}}</p>
                 <button class="niceButton pull-right" ng-click="cm.cancel()">X</button>
             </div>
         </div>
@@ -151,27 +151,31 @@
             <br />
             <div class="row">
                 <div class="col-md-6 col-md-offset-3 text-center">
-                    <p>Wondering about recalls? Click here to <a href="" ng-click="showme=true">show</a>.</p>
-                    <p>Click here to <a href="" ng-click="showme=false">hide</a>.</p>
+                    <p>Recalls</p>
+                    <p class="text-center recall-line">------------</p>
                 </div>
             </div>
             <br />
-            <div class="row" ng-show="showme" ng-repeat="recall in cm.car.recalls.Results">
-                <div class="col-md-10 col-md-offset-1">
-                    <p class="text-center recall-line">------------</p>
-                    <p>{{recall.ReportReceivedDate | date:"MM/dd/yyyy"}}</p>
-                    <br />
-                    <p>{{recall.Component}}</p>
-                    <br />
-                    <p>{{recall.Summary}}</p>
-                    <br />
-                    <p>{{recall.Conequence}}</p>
-                    <br />
-                    <p>{{recall.Remedy}}</p>
-                    <br />
-                    <p>{{recall.Notes}}</p>
-                    <br />
-                </div>
+            <div class="row" ng-repeat="recall in cm.car.recalls.Results">
+                <uib-accordion close-others="oneAtATime">
+                    <uib-accordion-group class="modalBodyStuff" heading="{{recall.Component}}">
+                        <div class="col-md-10 col-md-offset-1">
+                            <p class="text-center recall-line">------------</p>
+                            <p>{{recall.ReportReceivedDate | date:"MM/dd/yyyy"}}</p>
+                            <br />
+                            <p>{{recall.Component}}</p>
+                            <br />
+                            <p>{{recall.Summary}}</p>
+                            <br />
+                            <p>{{recall.Conequence}}</p>
+                            <br />
+                            <p>{{recall.Remedy}}</p>
+                            <br />
+                            <p>{{recall.Notes}}</p>
+                            <br />
+                        </div>
+                    </uib-accordion-group>
+                </uib-accordion>
             </div>
         </div>
 

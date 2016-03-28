@@ -3,7 +3,7 @@
     background: linear-gradient(
             rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('../img/background-car.jpg') no-repeat center fixed;
     background-size: cover;
-    color:#EB5168;
+    color:white;
     text-shadow: 1px 1px 2px rgba(0, 0, 0, 1);
 }
 
@@ -23,7 +23,7 @@ em {
 }
 
 #topTitle {
-    color:white;
+    color:#EB5168;
 }
 
 .carStuff {
@@ -96,6 +96,10 @@ em {
     background: rgb(56,56,56);
 }
 
+.modalBodyStuff {
+    background: black;
+}
+
 .recall-line{
     color:white;
 }
@@ -104,4 +108,5 @@ em {
     background: white;
     border-radius: 3px;
     font-weight: 900;
+    color: #EB5168;
 }
